@@ -18,6 +18,7 @@ class TestForm extends React.Component {
   /*Overwrites current state 'encdiff' with value inputed by the user
   Runs when user changes the encounter difficulty dropdown
   Sends current state of component to parent*/
+  
   handleChange(event) {
     var key = event.target.getAttribute('data-key'); 
     if(key == 'difficulty') {
