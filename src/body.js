@@ -19,13 +19,52 @@ class Body extends React.Component {
 			environment: 'any',
 			mincr: '',
 			maxcr: '',
-			encdiff: ''
+			encdiff: '',
+			nummon:'',
+			monsterlist: [{
+				ac: 12,
+				alignment: 'neutral good',
+				cr: "1/4",
+				environment: "mountain, planar",
+				guid: "0cd9a2e0-16bc-4c84-86c8-feb035c0b5d6",
+				hp: 13,
+				init: 2,
+				lair: '',
+				legendary: '',
+				name: 'Aarakocra',
+				section: '',
+				size: 'Medium',
+				source: "Monster Manual: 12, Princes of the Apocalypse Online Supplement v1.0: 6",
+				tags: "Aarakocra",
+				type: "Humanoid",
+				unique: ''
+			},
+			{
+				ac: 19,
+				alignment: "lawful good",
+				cr: "15",
+				environment: "coast",
+				guid: "ac41ad48-6631-413e-8e68-6e29696c8f35",
+				hp: 212,
+				init: 0,
+				lair: "lair",
+				legendary: "legendary",
+				name: "Adult Bronze Dragon",
+				section: "Dragons",
+				size: "Huge",
+				source: "Monster Manual: 108, Princes of the Apocalypse Online Supplement v1.0: 7",
+				tags: "",
+				type: "Dragon",
+				unique: ''			
+			}],
+			monsterarray: []
 		}
 
 		/*Binds 'this' to functions*/
 		this.groupInfoCallBack = this.groupInfoCallBack.bind(this);
 		this.encounterCallBack = this.encounterCallBack.bind(this);
 		this.generateEncounter = this.generateEncounter.bind(this);
+		this.displayEncounter = this.displayEncounter.bind(this);
 
 	}
 
@@ -44,22 +83,86 @@ class Body extends React.Component {
 		this.setState({environment: data.environment,
 			mincr: data.mincr,
 			maxcr: data.maxcr,
-			encdiff: data.encdiff
+			encdiff: data.encdiff,
+			nummon: data.nummon
 		}, function() {
 			console.log("The environment was changed to " + data.environment + " The current saved environment is " + this.state.environment);
 			console.log("The min Cr was changed to " + data.mincr + " The current saved minCr is " + this.state.mincr);
 			console.log("The max Cr was changed to " + data.maxcr + " The current saved maxCr is " + this.state.maxcr);
 			console.log("The encounter difficultly was changed to " + data.encdiff + " The current saved encounter difficultly is " + this.state.encdiff);
+			console.log("The number of monsters was changed to " + data.nummon + " The current saved number of monsters is " + this.state.nummon);
 
 
 		});
 	}
 
+	displayEncounter() {
+		var monsterArray = [];
+		this.state.monsterlist.forEach(function(monster) {
+			console.log("This monster's name is " + monster.name);
+			monsterArray.push(
+			<div class='monster-display'>
+				<h3>{monster.name}</h3>
+				<p>AC: {monster.ac}</p>
+				<p>HP: {monster.hp}</p>
+				<p>CR: {monster.cr}</p>
+				<p>Environment: {monster.environment}</p>
+				<p>size: {monster.size}</p>
+				<p>Alignment: {monster.alignment}</p>
+				<p>Source: {monster.source}</p>
+			</div>
+			);
+		});
+
+		this.setState({monsterarray: monsterArray}, function() {
+        	console.log("Monster State has been updated to " + this.state.monsterarray);
+		});
+	}
+
+	// determineCr(xpBudg, list) {
+
+	// }
+
 	generateEncounter() {
-		if(this.state.encdiff === '' || this.state.mincr === '' || this.state.maxcr === '') {
+		if(this.state.encdiff === '' || this.state.mincr === '' || this.state.maxcr === '' || this.state.nummon == '') {
 			console.log('Not all information was entered');
+		} else if(this.state.mincr > this.state.maxcr) {
+			console.log("This minimun cr is greater than the maximun cr");
 		} else {
 			console.log("Generate the encounter");
+			//calculate xp budget
+			console.log("Calculating xp budget");
+			var xpBudg;
+			if(this.state.encdiff == 'easy') {
+				xpBudg = this.state.easy[this.state.level];
+			} else if(this.state.encdiff == 'med') {
+				xpBudg = this.state.med[this.state.level];
+			} else if(this.state.encdiff == 'hard') {
+				xpBudg = this.state.hard[this.state.level];
+			} else {
+				xpBudg = this.state.deadly[this.state.level];
+			}
+
+			xpBudg = xpBudg * this.state.size;
+			console.log("the xp budget has been determined to be " + xpBudg);
+			// determine number of monsters
+			var numMonster = this.state.nummon;
+			var multiplier;
+			if(numMonster == 1) {
+				multiplier = 1
+			} else if(numMonster == 2) {
+				multiplier = 1.5;
+			} else if( numMonster > 2 && numMonster <= 6) {
+				multiplier = 2;
+			} else {
+				multiplier = 2.5;
+			}
+ 			//determine crs of monsters
+
+			//send crs to server
+			//server sends back monster details
+			//display details
+			this.displayEncounter();
 		}
 	}
 
@@ -69,8 +172,10 @@ class Body extends React.Component {
 			<div class="container">
 				<GroupInfo callBack={this.groupInfoCallBack}></GroupInfo>
 				<TestForm callBack={this.encounterCallBack}></TestForm>
-				<p>The current multiplier is {multiplier}</p>
 				<button onClick={this.generateEncounter}>Generate Encounter</button>
+				<h2>Display Content Goest Here</h2>
+				<button onClick={this.displayEncounter}>Test Display</button>
+				{this.state.monsterarray}
 			</div>
 		);
 	}

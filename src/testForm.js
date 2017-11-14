@@ -6,7 +6,8 @@ class TestForm extends React.Component {
     this.state = {environment: 'any',
       mincr: '', /*Represents minmum cr of encounter*/
       maxcr: '', /*Represents maximum cr of encounter*/
-      encdiff: '' /*Represents encounter difficult*/
+      encdiff: '', /*Represents encounter difficult*/
+      nummon: '' /*Represents number of monsters in the encounter*/
     };
 
     /*Binds 'this' to functions*/
@@ -37,6 +38,10 @@ class TestForm extends React.Component {
       this.setState({environment: event.target.value}, function() {
       this.sendToParent();
       });
+    } else if(key == 'nummonster'){
+      this.setState({nummon: event.target.value}, function() {
+        this.sendToParent();
+      })
     } else {
       console.log('how did you get here?');
     }
@@ -61,6 +66,12 @@ class TestForm extends React.Component {
     let maxCr = [];
     for(let i = 0; i < crList.length; i++) {
       maxCr.push(<option value={crList[i]} data-key='maxCr'>{crList[i]}</option>);
+    }
+
+    let numMon = [];
+    numMon.push(<option value='' data-key='nummonster'># of Monsters</option>);
+    for( let i = 1; i < 11; i++) {
+      numMon.push(<option value={i} data-key='nummonster'>{i}</option>);
     }  
 
     return (
@@ -96,6 +107,9 @@ class TestForm extends React.Component {
           <option value='medium'>Medium</option>
           <option value='hard'>Hard</option>
           <option value='deadly'>Deadly</option>
+        </select>
+        <select nummonster={this.state.nummonster} data-key='nummonster' onChange={this.handleChange}>
+          {numMon}
         </select>
       </div>  
     );

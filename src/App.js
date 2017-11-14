@@ -2,24 +2,12 @@ import React, { Component } from 'react';
 
 import Body from './body.js';
 import logo from './logo.svg';
+import fire from './fire.js'
 import './App.css';
 
 import * as firebase from 'firebase';
 class App extends Component {
   render() {
-
-    console.log('Attempting to render App');
-
-    console.log('Initialize firebase');
-
-    // Initialize Firebase
-    var config = {
-      apiKey: "<AIzaSyD41QljJ0pzrjtlSF6xeDAq8GVxCXRaq-M>",
-      authDomain: "<dnd-gen>.firebaseapp.com",
-      databaseURL: "https://<dnd-gen>.firebaseio.com",
-      storageBucket: "<dnd-gen>.appspot.com"
-    };
-
     return (
       <div className="App">
         <header className="App-header">
