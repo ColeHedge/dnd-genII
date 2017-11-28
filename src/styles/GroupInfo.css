@@ -1,0 +1,9 @@
+/*Group Info Style*/
+
+.GroupInfo {
+	border: 5px solid black;
+	width: 18em;
+	float: left;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}

@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+
 var config = { /* COPY THE ACTUAL CONFIG FROM FIREBASE CONSOLE */
   apiKey: "AIzaSyD41QljJ0pzrjtlSF6xeDAq8GVxCXRaq-M",
   authDomain: "dnd-gen.firebaseapp.com",
