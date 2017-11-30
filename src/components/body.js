@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import TestForm from './testForm.js';
 import GroupInfo from './groupInfo.js';
+import axios from 'axios';
 
 import '../styles/Body.css';
 class Body extends React.Component {
@@ -67,6 +68,7 @@ class Body extends React.Component {
 		this.encounterCallBack = this.encounterCallBack.bind(this);
 		this.generateEncounter = this.generateEncounter.bind(this);
 		this.displayEncounter = this.displayEncounter.bind(this);
+		this.testAJAX = this.testAJAX.bind(this);
 
 	}
 
@@ -118,8 +120,19 @@ class Body extends React.Component {
 		});
 
 		this.setState({monsterarray: monsterArray}, function() {
-        	console.log("Monster State has been updated to " + this.state.monsterarray);
-		});
+         	console.log("Monster State has been updated to " + this.state.monsterarray);
+ 		});
+
+	}
+
+	testAJAX() {
+		axios.get('https://www.us-central1-dnd-gen.cloudfunctions.net/helloWorld')
+			.then(function(response) {
+				console.log(response);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
 	}
 
 	// determineCr(xpBudg, list) {
@@ -165,7 +178,6 @@ class Body extends React.Component {
 			//send crs to server
 			//server sends back monster details
 			//display details
-			this.displayEncounter();
 		}
 	}
 
@@ -180,6 +192,7 @@ class Body extends React.Component {
 					<h2>Display Content Goest Here</h2>
 					<button className="Generate" onClick={this.displayEncounter}>Test Display</button>
 					{this.state.monsterarray}
+					<button className="Generate" onClick={this.testAJAX}>AJAX Test</button>
 				</div>
 			</div>
 		);
