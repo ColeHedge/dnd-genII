@@ -127,7 +127,7 @@ class Body extends React.Component {
 	}
 
 	testAJAX() {
-		axios.get('https://www.us-central1-dnd-gen.cloudfunctions.net/helloWorld')
+		axios.get('https://us-central1-dnd-gen.cloudfunctions.net/helloWorld')
 			.then(function(response) {
 				console.log(response);
 			})
@@ -194,6 +194,7 @@ class Body extends React.Component {
 					<button className="Generate" onClick={this.displayEncounter}>Test Display</button>
 					{this.state.monsterarray}
 					<button className="Generate" onClick={this.testAJAX}>AJAX Test</button>
+					<h3>TESTING BUILD UPDATES</h3>
 				</div>
 			</div>
 		);
