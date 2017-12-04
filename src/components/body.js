@@ -127,9 +127,9 @@ class Body extends React.Component {
 	}
 
 	testAJAX() {
-		axios.get('https://us-central1-dnd-gen.cloudfunctions.net/helloWorld')
+		axios.get('https://us-central1-dnd-gen.cloudfunctions.net/helloWorld?data=canyoureadthis?')
 			.then(function(response) {
-				console.log(response);
+				console.log(response.data);
 			})
 			.catch(function(error) {
 				console.log(error);

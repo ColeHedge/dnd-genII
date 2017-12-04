@@ -8,5 +8,6 @@ const functions = require('firebase-functions');
 exports.helloWorld = functions.https.onRequest((req, res) => {
  	res.set('Access-Control-Allow-Origin', "*")
   	res.set('Access-Control-Allow-Methods', 'GET, POST')
-  	res.status(200).send('weeee!');
+  	var data = req.query.data;
+  	res.status(200).send(data);
 });
